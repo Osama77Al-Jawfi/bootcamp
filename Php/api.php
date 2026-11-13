@@ -1,10 +1,8 @@
 
 <?php
 
-// 1. Set response content type to JSON
 header("Content-Type: application/json");
 
-// 2. Function to send JSON response
 function response($status, $message, $data = null) {
 
     http_response_code($status);
@@ -23,21 +21,16 @@ function response($status, $message, $data = null) {
     exit;
 }
 
-// 3. Get request method
 $method = $_SERVER['REQUEST_METHOD'];
 
-// 4. Read request headers
 $headers = function_exists('getallheaders')
     ? getallheaders()
     : [];
 
-// 5. Read JSON request body
 $input = file_get_contents("php://input");
 
-// Decode JSON into PHP array
 $data = json_decode($input, true);
 
-// 6. Validate JSON for POST and PUT
 if (in_array($method, ['POST', 'PUT'])) {
 
     if (json_last_error() !== JSON_ERROR_NONE) {
@@ -49,7 +42,6 @@ if (in_array($method, ['POST', 'PUT'])) {
     }
 }
 
-// 7. Handle HTTP methods
 switch ($method) {
 
     case 'GET':
